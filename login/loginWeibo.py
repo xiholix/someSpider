@@ -166,6 +166,11 @@ def pinLogin(myname, servertime, nonce, rsakv, mypass, cookievalue, pincode):
         infos = urllib2.urlopen(new_url).read()
         print infos.decode('gb2312')
         cookies = requests.utils.dict_from_cookiejar(cj)
+        path = 'img/'+pincode+'.png'
+        print path
+        with open(path, 'wb') as f:
+            im = open('pin.png')
+            f.write(im.read())
         return cookies
     except Exception:
         # cj, cookievalue = getPinCode('')
@@ -305,11 +310,33 @@ def loginPass():
     import pickle
     pickle.dump(cookies_list, open('cookies.d','wb'))
 
+
+def getPicture():
+    account =[
+     'bangchangge674@yeah.net:a123456',
+     'pengpi1429@yeah.net:a123456',
+     'bi15324@yeah.net:a123456',
+     'xuan62893@yeah.net:a123456',
+     'hanlingyi47@yeah.net:a123456',
+     'yabeiqii132177@yeah.net:a123456',
+     'zhuansi515480@yeah.net:a123456',
+     'shen961736@yeah.net:a123456',
+     'yingju21772@yeah.net:a123456',
+     'rongtaicui444@yeah.net:a123456',
+     'jiaoraohui09143@yeah.net:a123456',
+     'fei044646@yeah.net:a123456',
+    ]
+    import random
+    while True:
+        key,value = random.choice(account).split(':')
+        login(key, value)
+
 if __name__ == "__main__":
     # us = u'\u4e3a\u4e86\u60a8\u7684\u5e10\u53f7\u5b89\u5168\uff0c\u8bf7\u8f93\u5165\u9a8c\u8bc1\u7801'
     # print us
     pass
     # loginPass()
+    getPicture()
 
 
 

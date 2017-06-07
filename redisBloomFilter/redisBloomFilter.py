@@ -1,14 +1,31 @@
-# -*- coding: utf-8 -*-
-
-# Define your item pipelines here
+# -*-coding:utf8-*-
+#                       _oo0oo_
+#                      o8888888o
+#                      88" . "88
+#                      (| -_- |)
+#                      0\  =  /0
+#                    ___/`---'\___
+#                  .' \\|     |// '.
+#                 / \\|||  :  |||// \
+#                / _||||| -:- |||||- \
+#               |   | \\\  -  /// |   |
+#               | \_|  ''\---/''  |_/ |
+#               \  .-\__  '-'  ___/-. /
+#             ___'. .'  /--.--\  `. .'___
+#          ."" '<  `.___\_<|>_/___.' >' "".
+#         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+#         \  \ `_.   \_ __\ /__ _/   .-` /  /
+#     =====`-.____`.___ \_____/___.-`___.-'=====
+#                       `=---='
 #
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-import codecs
-from tweetInfo.items import TweetinfoItem
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+#
+#     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#               佛祖保佑         永无BUG
+#
+#
+import redis
+import hashlib
 
 import redis
 from hashlib import md5
@@ -67,15 +84,5 @@ class BloomFilter(object):
             loc = f.hash(str_input)
             self.server.setbit(name, loc, 1)
 
-bl = BloomFilter()
-class TweetinfoPipeline(object):
-    def process_item(self, item, spider):
-
-        if not bl.isContains(item["id"]):
-            bl.insert(item["id"])
-            f = codecs.open('info.d','a', 'utf8')
-            write_str = item['id']+'\t'+item['follow_num']+'\t'+item['fans_num']+'\t'+item['tweet_num'] +'\t'+\
-                        item['sex']+'\t'+item['name']+'\t'+item['address']+'\t'+item['intro']+'\n'
-            f.write(write_str)
-            f.close()
-        return item
+if __name__ == '__main__':
+    BloomFilter(blockNum=2)
